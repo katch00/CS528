@@ -11,14 +11,19 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
 
-// make q blocks
-// for each able (age table/arrays)
-	// count frequencies of sensitive attributes
-	//sort the counts in descending orders
-	// q-block is (c,3)-diverse if r1 < c(r3 + r4 ..)
-	// if not diverse, diversify
-		// do this for all three c values
-// k anonymize + print
+/**
+ * (c,l)-Diversity Algorithm
+ * @author nstro
+ * 
+ * Similar process to EntropyLDiversity.java, except diversityCheck() fits (c,l)-diversity needs
+ * 
+ * To find if (c,l)-Diverse:
+ * 	Get Table
+ * 	Put all sensitive attributes from table into an arrayList
+ *  Find attribute frequency using Map
+ *  Put all frequency values into arraylist, sort in descending order
+ *  Find if r1 < c(r3+ .... +rm) (r3 for l=3 diversity)
+ */
 public class RecursiveLDiversity {
 	
 	private static final int K_VAL = 5;
@@ -105,7 +110,14 @@ public class RecursiveLDiversity {
 		System.out.println("Anonymization complete, please see " + cVal+ ",3-recursive-output.txt. K: " + k + ". Gen-level: " + kGenLevel);
 	}
 	
+	// MEHTODS
 	
+	/**
+	 * Checks (c,l)-diversity of a table/array of tuples.
+	 * 
+	 * @param list
+	 * @return
+	 */
 	public static boolean diversityCheck(ArrayList<String> list, double cVal) {
 		boolean isDiverse = false;
 		

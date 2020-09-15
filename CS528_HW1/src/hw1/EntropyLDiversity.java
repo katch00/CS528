@@ -133,8 +133,7 @@ public class EntropyLDiversity {
 	}
 	
 	/**
-	 * Checks l-diversity of a table/array of tuples. If not l-diverse, diversifies the tuple using diversify()
-	 * returns a boolean used for human checking
+	 * Checks l-diversity of a table/array of tuples.
 	 * 
 	 * @param list
 	 * @return
