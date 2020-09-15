@@ -8,7 +8,7 @@ import java.util.Map;
  * Methods file, has methods used in more than one file to maintain code health.
  * Does not include generalizeData()
  * 
- * @author nstro
+ * @author nstro 
  *
  */
 public class HelperMethods {
