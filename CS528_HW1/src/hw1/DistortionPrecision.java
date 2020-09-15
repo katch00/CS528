@@ -27,7 +27,7 @@ public class DistortionPrecision {
 		double maritalLevel = sc.nextDouble();
 		
 		double sum = (ageLevel/MAX_AGE_LEVEL) + (eduLevel/MAX_EDU_LEVEL) + (raceLevel/MAX_RACE_LEVEL) + (maritalLevel/MAX_MARITAL_LEVEL);
-		double distortion = sum/4;
+		double distortion = sum/NUM_QIIDS;
 		
 		System.err.println("Distortion = " + distortion);
 		sc.close();
