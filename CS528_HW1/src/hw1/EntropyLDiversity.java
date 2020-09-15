@@ -129,6 +129,7 @@ public class EntropyLDiversity {
 	
 	/**
 	 * Method used to diversify the data
+	 * Could definitely make less strict lol
 	 * 
 	 * @param list
 	 * @param age
