@@ -1,5 +1,5 @@
 # CS528
-Repo with code for CS528: Data Privacy and Security
+Repo with code for CS528: Data Privacy and Security  
 Author: Natalia Stroupe
 
 ## Homeworks
