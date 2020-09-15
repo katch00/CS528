@@ -1,0 +1,25 @@
+Print Map:
+for (Map.Entry<String, ArrayList<String>> val : eduTableMap.entrySet()) { 
+            System.out.println("Element " + val.getKey());
+            
+            ArrayList<String> eduTuples = val.getValue();
+            for(String i : eduTuples) {
+            	System.out.println(i);
+            }
+        }
+        
+        
+        
+// print statement to see if map of maps worked!
+		for (Map.Entry<String, Map<String, ArrayList<String>>> val : ageTableMap.entrySet()) {
+			Map<String, ArrayList<String>> eduTuples = val.getValue();
+			
+			for(Map.Entry<String, ArrayList<String>> val2 : eduTuples.entrySet()) {
+				 System.out.println("Element " + val2.getKey());
+		            
+				 ArrayList<String> ageTuples = val2.getValue();
+				 for(String i : ageTuples) {
+					 System.out.println(i);
+				 }
+			}
+		}

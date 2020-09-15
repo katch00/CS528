@@ -1,17 +1,26 @@
 package hw1;
 
-import java.io.*;
-import java.util.*;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
 
-// semi-implementation of DataFly algorithm. Distortion high, which is expected from this algorithm choice
-// To be used with adult.data file from https://archive.ics.uci.edu/ml/machine-learning-databases/adult/
-// I really tried :( 
-// Author: Natalia Stroupe
+/**
+ * K-anonymization algorithm
+ * @author Natalia Stroupe
+ *
+ * semi-implementation of DataFly algorithm. Distortion high, which is expected from this algorithm choice
+ * To be used with adult.data file from https://archive.ics.uci.edu/ml/machine-learning-databases/adult/
+ * I tried really hard :)
+ */
 
 public class Kanon {
 	
-	public static final int HIGH_PROTECTION_K = 10;
-	public static final int LOW_PROTECTION_K = 5 ;
+	private static final int HIGH_PROTECTION_K = 10;
+	private static final int LOW_PROTECTION_K = 5 ;
 	
 	public static void main(String[] args) throws IOException {
 		ArrayList<String> highProtection = new ArrayList<String>();
@@ -79,7 +88,7 @@ public class Kanon {
 		rowsList.addAll(lowProtection);
 		
 		// Write rows to output file
-		FileWriter writer = new FileWriter("output.txt", false); 
+		FileWriter writer = new FileWriter("k-anon-output.txt", false); 
 		for(String str: rowsList) {
 		  writer.write(str + System.lineSeparator());
 		}
