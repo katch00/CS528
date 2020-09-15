@@ -1,5 +1,6 @@
 # CS528
-Repo with code for CS528: Data Privacy and Security
+Repo with code for CS528: Data Privacy and Security. Taken Fall 2020  
+Author: Natalia Stroupe
 
 ## Homeworks
 ### HW 1: k-Anonymity and l-Diversity (entropy and recursive)
