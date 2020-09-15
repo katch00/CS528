@@ -2472,6 +2472,10 @@
 >60,*,*,9th-12th,*,Married,Handlers-cleaners,*,White/Black,*,*,*,*,*,*
 >60,*,*,9th-12th,*,Married,Craft-repair,*,White/Black,*,*,*,*,*,*
 >60,*,*,9th-12th,*,Was Married,Sales,*,White/Black,*,*,*,*,*,*
+>60,*,*,9th-12th,*,Never-married,Exec-managerial,*,White/Black,*,*,*,*,*,*
+>60,*,*,9th-12th,*,Never-married,Sales,*,Asian-Pac-Islander/Amer-Indian-Eskimo/Other,*,*,*,*,*,*
+>60,*,*,9th-12th,*,Never-married,Tech-support,*,Asian-Pac-Islander/Amer-Indian-Eskimo/Other,*,*,*,*,*,*
+>60,*,*,9th-12th,*,Never-married,Craft-repair,*,White/Black,*,*,*,*,*,*
 <=60,*,*,9th-12th,*,Never-married,?,*,White/Black,*,*,*,*,*,*
 <=60,*,*,9th-12th,*,Never-married,Other-service,*,White/Black,*,*,*,*,*,*
 <=60,*,*,9th-12th,*,Never-married,Handlers-cleaners,*,White/Black,*,*,*,*,*,*

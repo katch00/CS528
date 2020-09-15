@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 import java.util.Scanner;
 
 /**
@@ -37,6 +38,9 @@ public class EntropyLDiversity {
 	
 	private static final int K_VAL = 5;
 	private static final int L_VAL = 3;
+	
+	private static String[] races = new String[] {"White", "Black", "Amer-Indian-Eskimo", "Asian-Pac-Islander", "Other"};
+	private static String[] marital = new String[] {"Divorced", "Married-civ-spouse", "Never-married", "Separated", "Widowed", "Married-spouse-absent", "Married-AF-spouse"};
 	
 	public static void main(String[] args) throws IOException {
 		System.out.println("Hello World!");
@@ -81,6 +85,11 @@ public class EntropyLDiversity {
 				 // only one was false, if you care to know
 				 System.out.println(diverse);
 				 count++;
+				 
+				 if(!diverse) {
+					diversify(ageTuples, val2.getKey(), val.getKey());
+					// System.out.println("New diversity rating" + diversityCheck(ageTuples));
+				 }
 			}
 		}
 		
@@ -103,7 +112,6 @@ public class EntropyLDiversity {
 			kGenLevel++;
 			Kanon.generalizeData(dataSet, kGenLevel);
 			
-			
 			k = Kanon.minFrequencies(dataSet);
 		}
         
@@ -118,6 +126,21 @@ public class EntropyLDiversity {
 	}
 	
 	// METHODS
+	
+	/**
+	 * Method used to diversify the data
+	 * 
+	 * @param list
+	 * @param age
+	 * @param education
+	 */
+	public static void diversify(ArrayList<String> list, String age, String education) {
+		Random rndm = new Random();
+		list.add(age + ",*,*," + education + ",*," + marital[rndm.nextInt(marital.length)] + ",Exec-managerial,*," + races[rndm.nextInt(races.length)] + ",*,*,*,*,*,*");
+		list.add(age + ",*,*," + education + ",*," + marital[rndm.nextInt(marital.length)] + ",Sales,*," + races[rndm.nextInt(races.length)] + ",*,*,*,*,*,*");
+		list.add(age + ",*,*," + education + ",*," + marital[rndm.nextInt(marital.length)] + ",Tech-support,*," + races[rndm.nextInt(races.length)] + ",*,*,*,*,*,*");
+		list.add(age + ",*,*," + education + ",*," + marital[rndm.nextInt(marital.length)] + ",Craft-repair,*," + races[rndm.nextInt(races.length)] + ",*,*,*,*,*,*");
+	}
 	
 	/**
 	 * Checks l-diversity of a table/array of tuples. If not l-diverse, diversifies the tuple using diversify()
