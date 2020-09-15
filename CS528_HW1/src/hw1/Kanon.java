@@ -12,7 +12,7 @@ import java.util.Scanner;
  * K-anonymization algorithm
  * @author Natalia Stroupe
  *
- * semi-implementation of DataFly algorithm. Distortion high, which is expected from this algorithm choice
+ * Semi-implementation of DataFly algorithm. Distortion high, which is expected from this algorithm choice
  * To be used with adult.data file from https://archive.ics.uci.edu/ml/machine-learning-databases/adult/
  * I tried really hard :)
  */
@@ -98,6 +98,13 @@ public class Kanon {
 		System.out.println("Anonymization complete, please see output.txt.");
    }
 	
+	// METHODS
+	
+	/**
+	 * Suppresses unnecessary values in original data file as directed by instructions
+	 * 
+	 * @param rowsList
+	 */
 	public static void initialSuppression(ArrayList<String> rowsList) {
 		for(int i=0; i < rowsList.size(); i++) {
 			String row = rowsList.get(i);
@@ -146,7 +153,12 @@ public class Kanon {
 		}
 	}
 	
-	// Calculates how many times a tuple appears (used to check if k is met)
+	/**
+	 * Calculates how many times a tuple appears in a given table/list (used to check if k is met)
+	 * 
+	 * @param list
+	 * @return
+	 */
 	public static int minFrequencies(ArrayList<String> list) 
     { 
         int min = 10000000;
@@ -177,7 +189,13 @@ public class Kanon {
         return min;
     }  
 	
-	//generalizeData based off of Datafly algorithm. If k isn't met, generalize the attribute with most distinct values
+	/**
+	 * Generalizes data based off of Datafly algorithm. 
+	 * Datafly: If k isn't met, generalize the attribute with most distinct values
+	 * 
+	 * @param arr
+	 * @param level
+	 */
 	public static void generalizeData(ArrayList<String> arr, int level) {
 		switch (level) {
 			//Generalize Age 1 level: most number of distinct values

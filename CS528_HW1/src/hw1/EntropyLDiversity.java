@@ -117,15 +117,15 @@ public class EntropyLDiversity {
 		
 	}
 	
+	// METHODS
 	
-	// Find Diversity of table:
-		// Every Array In map:
-			// count total number of values in array
-			// make Map of frequencies of SA
-			// add sum of (Freq/total)log(freq/total) (negate sum)
-			// must be larger than log(L)
-			// if not l-diverse, diversify
-	// calculates whether table (arraylist) meet l-diversity
+	/**
+	 * Checks l-diversity of a table/array of tuples. If not l-diverse, diversifies the tuple using diversify()
+	 * returns a boolean used for human checking
+	 * 
+	 * @param list
+	 * @return
+	 */
 	public static boolean diversityCheck(ArrayList<String> list) {
 		boolean isDiverse = false;
 		
@@ -160,8 +160,13 @@ public class EntropyLDiversity {
 		
 		return isDiverse;
 	}
-	
-	//                edu         age     tuples of Education and age       
+
+	/**
+	 * Separates Education level tables into tables sorted by age (suppression level 1).
+	 * 
+	 * @param map
+	 * @return
+	 */
 	public static Map<String, Map<String, ArrayList<String>>> ageTables(Map<String, ArrayList<String>> map) {
 		
 		Map<String, Map<String, ArrayList<String>>> ageTuples = new HashMap<String, Map<String, ArrayList<String>>>();
@@ -192,12 +197,13 @@ public class EntropyLDiversity {
 		
 		return ageTuples;
 	}
-	
-	public static void diversify(ArrayList<String> list, String education) {
-		
-	}
-	
-	// separates dataset into Map, key:education level value: arraylist of tuples with that education level
+
+	/**
+	 * Separates dataset into a Map, key:education level value: arraylist of tuples with that education level
+	 * 
+	 * @param list
+	 * @return
+	 */
 	public static Map<String, ArrayList<String>> educationTables(ArrayList<String> list) {   
 		
 		Map<String, ArrayList<String>> sortedArrays = new HashMap<String, ArrayList<String>>();
@@ -220,6 +226,11 @@ public class EntropyLDiversity {
         return sortedArrays;
     }  
 	
+	/**
+	 * Suppresses unnecessary values in original data file as directed by instructions
+	 * 
+	 * @param rowsList
+	 */
 	public static void initialSuppression(ArrayList<String> rowsList) {
 		for(int i=0; i < rowsList.size()-1; i++) {
 			String row = rowsList.get(i);
