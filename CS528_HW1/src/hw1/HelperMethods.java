@@ -67,6 +67,71 @@ public class HelperMethods {
 	}
 	
 	/**
+	 * Separates Education level tables into tables sorted by age (suppression level 1).
+	 * 
+	 * @param map
+	 * @return
+	 */
+	public static Map<String, Map<String, ArrayList<String>>> ageTables(Map<String, ArrayList<String>> map) {
+		
+		Map<String, Map<String, ArrayList<String>>> ageTuples = new HashMap<String, Map<String, ArrayList<String>>>();
+		
+		for (Map.Entry<String,  ArrayList<String>> val : map.entrySet()) {
+        	ArrayList<String> eduTuples = val.getValue();
+        	Kanon.generalizeData(eduTuples, 1);
+        	String key = val.getKey();
+        	
+        	Map<String, ArrayList<String>> sortedArrays = new HashMap<String, ArrayList<String>>();
+            for(int i = 0; i < eduTuples.size()-1; i++) {
+            	String row = eduTuples.get(i);
+    			String[] thisRow = row.split(","); // array of values in tuple
+            	String ageKey = thisRow[0]; // key for hashmap
+            	
+            	ArrayList<String> tuples = new ArrayList<String>();
+            	if(sortedArrays.containsKey(ageKey)) {
+            		tuples.addAll(sortedArrays.get(ageKey));
+            	}
+            	
+            	tuples.add(row);
+            	
+            	sortedArrays.put(ageKey, tuples);
+            }
+            
+            ageTuples.put(key, sortedArrays);
+        }
+		
+		return ageTuples;
+	}
+
+	/**
+	 * Separates dataset into a Map, key:education level value: arraylist of tuples with that education level
+	 * 
+	 * @param list
+	 * @return
+	 */
+	public static Map<String, ArrayList<String>> educationTables(ArrayList<String> list) {   
+		
+		Map<String, ArrayList<String>> sortedArrays = new HashMap<String, ArrayList<String>>();
+        for(int i = 0; i < list.size()-1; i++) {
+        	String row = list.get(i);
+			String[] thisRow = row.split(","); // array of values in tuple
+        	String key = thisRow[3]; // key for hashmap
+        	
+        	ArrayList<String> tuples = new ArrayList<String>();
+        	if(sortedArrays.containsKey(key)) {
+        		tuples.addAll(sortedArrays.get(key));
+        	}
+        	
+        	tuples.add(row);
+        	
+        	
+        	sortedArrays.put(key, tuples);
+        }
+        
+        return sortedArrays;
+    }
+	
+	/**
 	 * Calculates how many times a tuple appears in a given table/list (used to check if k is met)
 	 * 
 	 * @param list
@@ -86,14 +151,14 @@ public class HelperMethods {
 		}
         
 		// hashmap to store the frequency of element 
-        Map<String, Integer> hm = new HashMap<String, Integer>(); 
+        Map<String, Integer> frequencies = new HashMap<String, Integer>(); 
   
         for (String i : temp) { 
-            Integer j = hm.get(i); 
-            hm.put(i, (j == null) ? 1 : j + 1); 
+            Integer j = frequencies.get(i); 
+            frequencies.put(i, (j == null) ? 1 : j + 1); 
         } 
   
-        for (Map.Entry<String, Integer> val : hm.entrySet()) { 
+        for (Map.Entry<String, Integer> val : frequencies.entrySet()) { 
             if(val.getValue() < min) {
             	min = val.getValue();
             }

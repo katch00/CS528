@@ -39,6 +39,9 @@ public class EntropyLDiversity {
 	
 	private static String[] races = new String[] {"White", "Black", "Amer-Indian-Eskimo", "Asian-Pac-Islander", "Other"};
 	private static String[] marital = new String[] {"Divorced", "Married-civ-spouse", "Never-married", "Separated", "Widowed", "Married-spouse-absent", "Married-AF-spouse"};
+	private static String[] occupation = new String[] {"Tech-support", "Craft-repair", "Other-service", "Sales", "Exec-managerial", 
+			"Prof-specialty", "Handlers-cleaners", "Machine-op-inspct", "Adm-clerical", "Farming-fishing", "Transport-moving", 
+			"Priv-house-serv", "Protective-serv", "Armed-Forces"};
 	
 	public static void main(String[] args) throws IOException {	
 		ArrayList<String> dataSet = new ArrayList<String>();
@@ -59,11 +62,11 @@ public class EntropyLDiversity {
 		HelperMethods.initialSuppression(dataSet);
 		
 		// create map of key: education, value: array of tuples. Can be seen as 16 tables sorted by education level
-		Map<String, ArrayList<String>> eduTableMap = educationTables(dataSet);
+		Map<String, ArrayList<String>> eduTableMap = HelperMethods.educationTables(dataSet);
 		
 		// create map of maps: Key: education value: age map, key: age, value: array of tuples
 		// do this to have "tables" with relatively similar QIIDs
-		Map<String, Map<String, ArrayList<String>>> ageTableMap = ageTables(eduTableMap);
+		Map<String, Map<String, ArrayList<String>>> ageTableMap = HelperMethods.ageTables(eduTableMap);
 		
 		// Check diversity for each education/age table (diversifies if not)
 		for (Map.Entry<String, Map<String, ArrayList<String>>> val : ageTableMap.entrySet()) {
@@ -75,8 +78,10 @@ public class EntropyLDiversity {
 				 boolean diverse = diversityCheck(ageTuples);
 				 
 				 
-				 if(!diverse) {
+				 while(!diverse) {
 					diversify(ageTuples, val2.getKey(), val.getKey());
+					
+					diverse = diversityCheck(ageTuples);
 				 }
 			}
 		}
@@ -114,7 +119,6 @@ public class EntropyLDiversity {
 	
 	/**
 	 * Method used to diversify the data
-	 * Could definitely make less strict lol (fix if time allows)
 	 * 
 	 * @param list
 	 * @param age
@@ -122,10 +126,10 @@ public class EntropyLDiversity {
 	 */
 	public static void diversify(ArrayList<String> list, String age, String education) {
 		Random rndm = new Random();
-		list.add(age + ",*,*," + education + ",*," + marital[rndm.nextInt(marital.length)] + ",Exec-managerial,*," + races[rndm.nextInt(races.length)] + ",*,*,*,*,*,*");
-		list.add(age + ",*,*," + education + ",*," + marital[rndm.nextInt(marital.length)] + ",Sales,*," + races[rndm.nextInt(races.length)] + ",*,*,*,*,*,*");
-		list.add(age + ",*,*," + education + ",*," + marital[rndm.nextInt(marital.length)] + ",Tech-support,*," + races[rndm.nextInt(races.length)] + ",*,*,*,*,*,*");
-		list.add(age + ",*,*," + education + ",*," + marital[rndm.nextInt(marital.length)] + ",Craft-repair,*," + races[rndm.nextInt(races.length)] + ",*,*,*,*,*,*");
+		for(int i = 0; i < 5; i++) {
+			list.add(age + ",*,*," + education + ",*," + marital[rndm.nextInt(marital.length)] + ","+ occupation[rndm.nextInt(marital.length)]
+					+ ",*," + races[rndm.nextInt(races.length)] + ",*,*,*,*,*,*");
+		}
 	}
 	
 	/**
@@ -168,70 +172,5 @@ public class EntropyLDiversity {
         }
 		
 		return isDiverse;
-	}
-
-	/**
-	 * Separates Education level tables into tables sorted by age (suppression level 1).
-	 * 
-	 * @param map
-	 * @return
-	 */
-	public static Map<String, Map<String, ArrayList<String>>> ageTables(Map<String, ArrayList<String>> map) {
-		
-		Map<String, Map<String, ArrayList<String>>> ageTuples = new HashMap<String, Map<String, ArrayList<String>>>();
-		
-		for (Map.Entry<String,  ArrayList<String>> val : map.entrySet()) {
-        	ArrayList<String> eduTuples = val.getValue();
-        	Kanon.generalizeData(eduTuples, 1);
-        	String key = val.getKey();
-        	
-        	Map<String, ArrayList<String>> sortedArrays = new HashMap<String, ArrayList<String>>();
-            for(int i = 0; i < eduTuples.size()-1; i++) {
-            	String row = eduTuples.get(i);
-    			String[] thisRow = row.split(","); // array of values in tuple
-            	String ageKey = thisRow[0]; // key for hashmap
-            	
-            	ArrayList<String> tuples = new ArrayList<String>();
-            	if(sortedArrays.containsKey(ageKey)) {
-            		tuples.addAll(sortedArrays.get(ageKey));
-            	}
-            	
-            	tuples.add(row);
-            	
-            	sortedArrays.put(ageKey, tuples);
-            }
-            
-            ageTuples.put(key, sortedArrays);
-        }
-		
-		return ageTuples;
-	}
-
-	/**
-	 * Separates dataset into a Map, key:education level value: arraylist of tuples with that education level
-	 * 
-	 * @param list
-	 * @return
-	 */
-	public static Map<String, ArrayList<String>> educationTables(ArrayList<String> list) {   
-		
-		Map<String, ArrayList<String>> sortedArrays = new HashMap<String, ArrayList<String>>();
-        for(int i = 0; i < list.size()-1; i++) {
-        	String row = list.get(i);
-			String[] thisRow = row.split(","); // array of values in tuple
-        	String key = thisRow[3]; // key for hashmap
-        	
-        	ArrayList<String> tuples = new ArrayList<String>();
-        	if(sortedArrays.containsKey(key)) {
-        		tuples.addAll(sortedArrays.get(key));
-        	}
-        	
-        	tuples.add(row);
-        	
-        	
-        	sortedArrays.put(key, tuples);
-        }
-        
-        return sortedArrays;
-    }  
+	}  
 }
