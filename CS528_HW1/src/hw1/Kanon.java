@@ -4,8 +4,6 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Scanner;
 
 /**
@@ -52,7 +50,7 @@ public class Kanon {
 		rowsList.addAll(highProtection);
 		
 		// calculate initial k
-		int k = minFrequencies(rowsList);
+		int k = HelperMethods.minFrequencies(rowsList);
 		int kGenLevel = 0;
 		
 		// Suppress all tuples until low protection k = 5 is met
@@ -65,7 +63,7 @@ public class Kanon {
 			rowsList.addAll(highProtection);
 			rowsList.addAll(lowProtection);
 			
-			k = minFrequencies(rowsList);
+			k = HelperMethods.minFrequencies(rowsList);
 		}
 		
 		//Print k and generalization level to use for k = 5 calculations later
@@ -76,7 +74,7 @@ public class Kanon {
 			kGenLevel++;
 			generalizeData(highProtection, kGenLevel);
 			
-			k = minFrequencies(highProtection);
+			k = HelperMethods.minFrequencies(highProtection);
 		}
 		
 		// used for later calculations
@@ -151,43 +149,7 @@ public class Kanon {
 			thisRow[14] = supp;
 			rowsList.set(i, String.join(",", thisRow));
 		}
-	}
-	
-	/**
-	 * Calculates how many times a tuple appears in a given table/list (used to check if k is met)
-	 * 
-	 * @param list
-	 * @return
-	 */
-	public static int minFrequencies(ArrayList<String> list) 
-    { 
-        int min = 10000000;
-        // we use a temp array to exclude the sensitive attribute from the frequency count
-        ArrayList<String> temp = new ArrayList<String>(list);
-        for(int i=0; i < temp.size(); i++) {
-			String row = temp.get(i);
-			String[] thisRow = row.split(",");
-			//6 occupation: suppress this to calculate frequencies since it doesn't count against k
-			thisRow[6] = "occupation";
-			temp.set(i, String.join(",", thisRow));
-		}
-        
-		// hashmap to store the frequency of element 
-        Map<String, Integer> hm = new HashMap<String, Integer>(); 
-  
-        for (String i : temp) { 
-            Integer j = hm.get(i); 
-            hm.put(i, (j == null) ? 1 : j + 1); 
-        } 
-  
-        for (Map.Entry<String, Integer> val : hm.entrySet()) { 
-            if(val.getValue() < min) {
-            	min = val.getValue();
-            }
-        } 
-        
-        return min;
-    }  
+	}  
 	
 	/**
 	 * Generalizes data based off of Datafly algorithm. 

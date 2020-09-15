@@ -1,0 +1,105 @@
+package hw1;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * Methods file, has methods used in more than one file to maintain code health.
+ * Does not include generalizeData()
+ * 
+ * @author nstro
+ *
+ */
+public class HelperMethods {
+	
+	/**
+	 * Suppresses unnecessary values in original data file as directed by instructions
+	 * 
+	 * @param rowsList
+	 */
+	public static void initialSuppression(ArrayList<String> rowsList) {
+		for(int i=0; i < rowsList.size()-1; i++) {
+			String row = rowsList.get(i);
+			String[] thisRow = row.split(", ");
+			
+			String supp = "*";
+			//Go through each attribute and suppress non QUIds
+			//0 age: QIID
+			if(thisRow[0].contains("?")) {
+				thisRow[0] = supp;
+			}
+			//1 work class: suppress
+			thisRow[1] = supp;
+			//2 fnlwgt: suppress
+			thisRow[2] = supp;
+			//3 education: QIID
+			if(thisRow[3].contains("?")) {
+				thisRow[3] = supp;
+			}
+			//4 education-num: suppress
+			thisRow[4] = supp;
+			//5 marital-status: QIID
+			if(thisRow[5].contains("?")) {
+				thisRow[5] = supp;
+			}
+			//6 occupation: sensitive attribute, remains as ?
+			//7 relationship: suppress
+			thisRow[7] = supp;
+			//8 race: QIID
+			if(thisRow[8].contains("?")) {
+				thisRow[8] = supp;
+			}
+			//9 sex: suppress
+			thisRow[9] = supp;
+			//10 capital-gain:
+			thisRow[10] = supp;
+			//11 capital-loss:
+			thisRow[11] = supp;
+			//12 hours-per-week: 
+			thisRow[12] = supp;
+			//13 native-country: 
+			thisRow[13] = supp;
+			//14 salary: prof said can be excluded, so suppressed
+			thisRow[14] = supp;
+			rowsList.set(i, String.join(",", thisRow));
+		}
+	}
+	
+	/**
+	 * Calculates how many times a tuple appears in a given table/list (used to check if k is met)
+	 * 
+	 * @param list
+	 * @return
+	 */
+	public static int minFrequencies(ArrayList<String> list) 
+    { 
+        int min = 10000000;
+        // we use a temp array to exclude the sensitive attribute from the frequency count
+        ArrayList<String> temp = new ArrayList<String>(list);
+        for(int i=0; i < temp.size(); i++) {
+			String row = temp.get(i);
+			String[] thisRow = row.split(",");
+			//6 occupation: suppress this to calculate frequencies since it doesn't count against k
+			thisRow[6] = "occupation";
+			temp.set(i, String.join(",", thisRow));
+		}
+        
+		// hashmap to store the frequency of element 
+        Map<String, Integer> hm = new HashMap<String, Integer>(); 
+  
+        for (String i : temp) { 
+            Integer j = hm.get(i); 
+            hm.put(i, (j == null) ? 1 : j + 1); 
+        } 
+  
+        for (Map.Entry<String, Integer> val : hm.entrySet()) { 
+            if(val.getValue() < min) {
+            	min = val.getValue();
+            }
+        } 
+        
+        return min;
+    }
+
+}
