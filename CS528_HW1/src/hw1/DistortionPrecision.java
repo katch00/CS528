@@ -9,7 +9,7 @@ public class DistortionPrecision {
 	private static final int NUM_QIIDS = 4;
 	private static final int MAX_AGE_LEVEL= 4;
 	private static final int MAX_EDU_LEVEL = 4;
-	private static final int MAX_RACE_LEVEL = 2;
+	private static final int MAX_RACE_LEVEL = 2; 
 	private static final int MAX_MARITAL_LEVEL = 2;
 	
 	public static void main(String[] args) throws FileNotFoundException {
