@@ -43,7 +43,7 @@ public class DistortionPrecision {
 		}
 		fileSc.close();
 		
-		System.out.println("Next we will calculate precision! Number of tuples: " + valueCount);
+		System.err.println("Precision: " + (1-distortion));
 		
 		
 		
