@@ -161,7 +161,7 @@ public class Kanon {
 	public static void generalizeData(ArrayList<String> arr, int level) {
 		switch (level) {
 			//Generalize Age 1 level: most number of distinct values
-			case 1: 
+			case 1:  
 				for(int i = 0; i < arr.size(); i++) {
 					String row = arr.get(i);
 					String[] thisRow = row.split(",");
